@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
+
+android { 
+    compileSdkVersion 28
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "com.dscgroup.fftcal"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+
+
+        python {
+            // If Chaquopy fails to find Python on your build machine, enable the following
+            // line and edit it to point to Python 3.5 or later.
+             buildPython "C:/Installs/Pythons/Python37/python.exe"
+            pip {
+                install "numpy"
+            }
+            staticProxy "arm"
+        }
+        ndk {
+            abiFilters "armeabi-v7a" //, "arm64-v8a", "x86" , "x86_64"
+        }
+        lintOptions {
+            checkReleaseBuilds false
+        }
+        // disable Optimize .Png File
+        aaptOptions {
+                    cruncherEnabled = false
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+}
